@@ -1,0 +1,71 @@
+import numpy as np
+
+ROW = 6
+COLUMN = 7
+
+def board():
+   board = np.np.zeros((ROW,COLUMN))
+   return board
+
+def insert(board, row, col, player):
+   if board[row][col]== 0:
+      board[row][col]= player
+      
+def print(board):
+   print(np.flip(board,0))
+
+def isWinning(board, piece):
+ #check all horizontal
+    for c in range(COLUMN-3):
+        for r in range(ROW):
+            if board[r][c] == piece and board[r][c+1] == piece and board[r][c+2] == piece and board[r][c+3] == piece:
+                return True
+            
+    #check all vertical
+    for c in range(COLUMN):
+        for r in range(ROW-3):
+            if board[r][c] == piece and board[r+1][c] == piece and board[r+2][c] == piece and board[r+3][c] == piece:
+                return True
+            
+    #check all positive diagonal
+    for c in range(COLUMN-3):
+        for r in range(ROW-3):
+            if board[r][c] == piece and board[r+1][c+1] == piece and board[r+2][c+2] == piece and board[r+3][c+3] == piece:
+                return True
+            
+    #check all negative tive diagonal
+    for c in range(COLUMN-3):
+        for r in range(3,ROW):
+            if board[r][c] == piece and board[r-1][c+1] == piece and board[r-2][c+2] == piece and board[r-3][c+3] == piece:
+                return True
+
+board = board()
+print(board)
+gameOver = False
+
+turn = 0
+
+while not gameOver:
+  #player 1 input
+  if turn == 0:
+     col = int(input("Player 1, select column to place your chip (0-6)"))
+     drop_piece(board, row, col, 1)
+     
+     if isWinning(board, 1):
+        print("Congratulations Player 1!!!")
+        game_over = True
+  
+  #player 2 input
+  else:
+    col = int(input("Player 1, select column to place your chip (0-6)"))
+    drop_piece(board, row, col, 2)
+     
+     if isWinning(board, 2):
+        print("Congratulations Player 2!!!")
+        game_over = True
+    
+  print_board(board)
+  
+  turn +=1
+  turn = turn % 2
+
